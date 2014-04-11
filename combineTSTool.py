@@ -6,7 +6,7 @@ import sys
 
 target_dir = sys.argv[1]
 save_dir = os.path.abspath(target_dir)
-savedTS = save_dir + "/all.ts"
+savedTS = save_dir + "/all.ts"  # 拼接完成后新文件的路径
 
 
 class TsParser(object):
@@ -18,10 +18,7 @@ class TsParser(object):
         original_files = os.listdir(self.tsdir)
         for i in original_files:
             if i.endswith(".ts"):
-                if i != "all.ts":
-                    self.tslist.append(i)
-                else:
-                    os.popen
+                self.tslist.append(i)
             else:
                 pass
 
@@ -29,10 +26,9 @@ class TsParser(object):
         """Analysize the ts files in target directory,
         if they are unabridged, will not do the conbine operation."""
         tsnum = len(self.tslist)
-        # print tsnum
         first_item = int((self.tslist[0].split('.'))[0].split('-')[-1])
         last_item = int((self.tslist[-1].split('.'))[0].split('-')[-1])
-        if tsnum == last_item + 1 - first_item:
+        if tsnum == last_item + 1 - first_item:  # 判断ts文件编号是否连续
             print "文件完整，可以接着完成拼接！"
             return True
         else:
@@ -44,24 +40,20 @@ class TsParser(object):
         if self.ts_file_parser():
             os.popen("touch " + savedTS)
             for each_ts in self.tslist:
-                # print each_ts
                 each_ts_path = os.path.join(save_dir, each_ts)
-                # print each_ts_path
-
-                command = "cat " + each_ts_path + ">> " + savedTS
+                command = "cat " + each_ts_path + ">> " + savedTS  # 开始拼接
                 try:
                     os.popen(command)
                 except Exception as e:
                     print e
                     break
-            # print "Done!"
         else:
             print "拼接未完成."
 
 
 def run():
     try:
-        os.popen("rm " + savedTS)
+        os.popen("rm " + savedTS)  # 如果当前目录有all.ts 删除之
     except Exception as e:
         print e
     myTS = TsParser(target_dir)
