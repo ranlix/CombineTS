@@ -26,9 +26,10 @@ class TsParser(object):
         """Analysize the ts files in target directory,
         if they are unabridged, will not do the conbine operation."""
         tsnum = len(self.tslist)
-        first_item = int((self.tslist[0].split('.'))[0].split('-')[-1])
-        last_item = int((self.tslist[-1].split('.'))[0].split('-')[-1])
-        if tsnum == last_item + 1 - first_item:  # 判断ts文件编号是否连续
+        # first_item = int((self.tslist[0].split('.'))[0].split('-')[-1])
+        # last_item = int((self.tslist[-1].split('.'))[0].split('-')[-1])
+        num_list = [int((x.split('.'))[0].split('-')[-1]) for x in self.tslist]
+        if tsnum == max(num_list) + 1 - min(num_list):  # 判断ts文件编号是否连续
             print "文件完整，可以接着完成拼接！"
             return True
         else:
