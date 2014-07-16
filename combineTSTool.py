@@ -33,7 +33,7 @@ class TsParser(object):
             print "文件完整，可以接着完成拼接！"
             return True
         else:
-            print "矮油,貌似文件不完整呢！"
+            print "矮油! 貌似文件不完整呢！"
             return False
 
     def combiner(self):
